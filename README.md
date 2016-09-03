@@ -1,6 +1,20 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+Udacity Front End Developer students projct.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## Installation
+
+just clone the repository then open `index.html` and u are ready to play.
+
+## Game Rule & Guides
+
+* the goal is reaching player to the water without touch the bug (he/she kinda alergic to the bug). if you get hitted then the score is decreased by -1 and u back to the stage.
+* every you reach the water land u got 1 score point.
+* player controlled by keyboard keypress `up` `right` `down` `left`. 
+
+## What's in the project?
+
+* `app.js` this where the enemy, player and rule were instiated.
+* `engine.js` this create land and enemy looping functionality in this file.
+* `resources.js` the game asset were loaded from here. 
