@@ -1,11 +1,14 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function (x, y, speed, sprite) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
+    this.sprite = sprite;
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
 };
 
 // Update the enemy's position, required method for game
@@ -14,6 +17,8 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += this.speed * dt;
+    this.reset();
 };
 
 // Draw the enemy on the screen, required method for game
@@ -21,19 +26,147 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Reset enemy location
+Enemy.prototype.reset = function() {
+    if (this.x >= 500) {
+        this.x = -101;
+        this.speed = randomInt(250, 450);
+    }
+};
+
+// The following prototype function store enemy dimensions
+Enemy.prototype.sides = function(side) {
+    if (side === 'leftSide') {
+        return this.x;
+    }
+    if (side === 'rightSide') {
+        return this.x + 101;
+    }
+    if (side === 'topSide') {
+        return this.y + 77;
+    }
+    if (side === 'bottomSide') {
+        return this.y + 144;
+    }
+};
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+var Player = function (x, y) {
+    this.sprite = 'images/char-boy.png';
+    this.x = x;
+    this.y = y;
+    this.score = 0;
+};
 
+// Upon collision player position is reset, score decreased by 1
+Player.prototype.update = function() {
+    if (this.collide()) {
+        this.reset();
+        if (this.score >= 1){
+            this.score = this.score -1;
+            console.log("boy hit the bug, score decreased " +  this.score);
+        }
+    }
+};
 
-// Now instantiate your objects.
+// Renders player, adds player score to top right corner of canvas\
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.font = "Bold 24px Helvetica";
+    ctx.fillText("Score: " + this.score, 382, 35);
+};
+
+// Enable player movement based key press
+// prevents out of map
+Player.prototype.handleInput = function(direction) {
+    if (direction === 'left' && this.x !== borders.leftWall) {
+        this.x -= 101;
+    }
+    if (direction === 'right' && this.x !== borders.rightWall) {
+        this.x += 101;
+    } 
+    if (direction === 'up' && this.y !== borders.topWall) {
+        this.y -= 85;
+    // increase score when hit water
+    } else if (direction === 'up' && this.y === 50) {
+        this.reset();
+        this.score++;
+        console.log("score increased " + this.score);
+    }
+    if (direction === 'down' && this.y !== borders.bottomWall) {
+        this.y += 85;
+    }
+};
+
+// Canvas border coordinate
+var borders = {
+    leftWall: 0,
+    rightWall: 404,
+    bottomWall: 390,
+    topWall: 50
+};
+
+// player dimension
+Player.prototype.sides = function(side) {
+    if (side === 'leftSide') {
+        return this.x + 31;
+    }
+    if (side === 'rightSide') {
+        return this.x + 84;
+    }
+    if (side === 'topSide') {
+        return this.y + 80;
+    }
+    if (side === 'bottomSide') {
+        return this.y + 140;
+    }
+};
+
+// Detects collision, returns boolean value
+Player.prototype.collide = function () {
+    for (i = 0; i < allEnemies.length; i++) {
+        if (this.sides('leftSide') < allEnemies[i].sides('rightSide') &&
+            this.sides('rightSide') > allEnemies[i].sides('leftSide') &&
+            this.sides('topSide') < allEnemies[i].sides('bottomSide') &&
+            this.sides('bottomSide') > allEnemies[i].sides('topSide')) {
+            return true;
+        }
+    }
+};
+
+// Reset player to start points
+Player.prototype.reset = function () {
+    this.x = 202;
+    this.y = 390;
+};
+
+// Now instantiate your enemy objects.
+var enemy1 = new Enemy(-101, 55, randomInt(250, 450), 'images/enemy-bug.png');
+var enemy2 = new Enemy(-101, 140, randomInt(250, 450), 'images/enemy-bug.png');
+var enemy3 = new Enemy(-101, 225, randomInt(250, 450), 'images/enemy-bug.png');
+
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+var allEnemies = [];
+allEnemies.push(enemy1);
+allEnemies.push(enemy2);
+allEnemies.push(enemy3);
 
+// Place the player object in a variable called player
+var player = new Player(202, 390);
+var allPlayers = [];
+allPlayers.push(player);
+
+// random int function
+// to make enemy appear randomly
+function randomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
         37: 'left',
