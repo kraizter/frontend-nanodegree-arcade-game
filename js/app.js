@@ -146,7 +146,7 @@ Player.prototype.reset = function () {
 
 // Insitantiate player object
 var enemy1 = new Enemy(-101, 55, randomInt(250, 450), 'images/enemy-bug.png');
-var enemy2 = new Enemy(-101, 140, randomInt(250, 450), 'images/enemy-bug.png');
+var enemy2 = new Enemy(-101, 140, randomInt(250, 450), 'images/rotten-enemy-bug.png');
 var enemy3 = new Enemy(-101, 225, randomInt(250, 450), 'images/enemy-bug.png');
 
 // push all enemies to array
