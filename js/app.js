@@ -1,3 +1,9 @@
+// use strict mode to converting mistake into errors
+// further info
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
+
+"use strict";
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed, sprite) {
     // Variables applied to each of our instances go here,
@@ -128,7 +134,7 @@ Player.prototype.sides = function(side) {
 
 // Detects collision, returns boolean value
 Player.prototype.collide = function() {
-    for (i = 0; i < allEnemies.length; i++) {
+    for (var i = 0; i < allEnemies.length; i++) {
         if (this.sides('leftSide') < allEnemies[i].sides('rightSide') &&
             this.sides('rightSide') > allEnemies[i].sides('leftSide') &&
             this.sides('topSide') < allEnemies[i].sides('bottomSide') &&
