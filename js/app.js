@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function (x, y, speed, sprite) {
+var Enemy = function(x, y, speed, sprite) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -55,7 +55,7 @@ Enemy.prototype.sides = function(side) {
 // a handleInput() method.
 // you can change player preference by changing asset.
 // dont forget to load the resource in egine.js
-var Player = function (x, y) {
+var Player = function(x, y) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = x;
     this.y = y;
@@ -66,9 +66,9 @@ var Player = function (x, y) {
 Player.prototype.update = function() {
     if (this.collide()) {
         this.reset();
-        if (this.score >= 1){
-            this.score = this.score -1;
-            console.log("nyan-girl hit the bug, score decreased " +  this.score);
+        if (this.score >= 1) {
+            this.score = this.score - 1;
+            console.log("nyan-girl hit the bug, score decreased " + this.score);
         }
     }
 };
@@ -88,10 +88,10 @@ Player.prototype.handleInput = function(direction) {
     }
     if (direction === 'right' && this.x !== borders.rightWall) {
         this.x += 101;
-    } 
+    }
     if (direction === 'up' && this.y !== borders.topWall) {
         this.y -= 85;
-    // increase score when hit water
+        // increase score when hit water
     } else if (direction === 'up' && this.y === 50) {
         this.reset();
         this.score++;
@@ -127,7 +127,7 @@ Player.prototype.sides = function(side) {
 };
 
 // Detects collision, returns boolean value
-Player.prototype.collide = function () {
+Player.prototype.collide = function() {
     for (i = 0; i < allEnemies.length; i++) {
         if (this.sides('leftSide') < allEnemies[i].sides('rightSide') &&
             this.sides('rightSide') > allEnemies[i].sides('leftSide') &&
@@ -139,7 +139,7 @@ Player.prototype.collide = function () {
 };
 
 // Reset player to start points
-Player.prototype.reset = function () {
+Player.prototype.reset = function() {
     this.x = 202;
     this.y = 390;
 };
@@ -160,7 +160,7 @@ var player = new Player(202, 390);
 
 // random int function
 // to make enemy appear randomly
-function randomInt (min, max) {
+function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
