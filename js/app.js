@@ -54,7 +54,7 @@ Enemy.prototype.sides = function(side) {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function (x, y) {
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-cat-girl.png';
     this.x = x;
     this.y = y;
     this.score = 0;
@@ -66,7 +66,7 @@ Player.prototype.update = function() {
         this.reset();
         if (this.score >= 1){
             this.score = this.score -1;
-            console.log("boy hit the bug, score decreased " +  this.score);
+            console.log("nyan-girl hit the bug, score decreased " +  this.score);
         }
     }
 };
@@ -157,13 +157,6 @@ allEnemies.push(enemy3);
 var player = new Player(202, 390);
 var allPlayers = [];
 allPlayers.push(player);
-
-// random int function
-// to make enemy appear randomly
-function randomInt (min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 
 // This listens for key presses and sends the keys to your
 // player.handleInput() method. You don't need to modify this.
