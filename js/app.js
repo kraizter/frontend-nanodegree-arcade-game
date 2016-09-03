@@ -53,6 +53,8 @@ Enemy.prototype.sides = function(side) {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+// you can change player preference by changing asset.
+// dont forget to load the resource in egine.js
 var Player = function (x, y) {
     this.sprite = 'images/char-cat-girl.png';
     this.x = x;
@@ -108,7 +110,7 @@ var borders = {
     topWall: 50
 };
 
-// player dimension
+// player jumping block dimension
 Player.prototype.sides = function(side) {
     if (side === 'leftSide') {
         return this.x + 31;
@@ -142,12 +144,12 @@ Player.prototype.reset = function () {
     this.y = 390;
 };
 
-// Now instantiate your enemy objects.
+// Insitantiate player object
 var enemy1 = new Enemy(-101, 55, randomInt(250, 450), 'images/enemy-bug.png');
 var enemy2 = new Enemy(-101, 140, randomInt(250, 450), 'images/enemy-bug.png');
 var enemy3 = new Enemy(-101, 225, randomInt(250, 450), 'images/enemy-bug.png');
 
-// Place all enemy objects in an array called allEnemies
+// push all enemies to array
 var allEnemies = [];
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
@@ -155,8 +157,13 @@ allEnemies.push(enemy3);
 
 // Place the player object in a variable called player
 var player = new Player(202, 390);
-var allPlayers = [];
-allPlayers.push(player);
+
+// random int function
+// to make enemy appear randomly
+function randomInt (min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 // This listens for key presses and sends the keys to your
 // player.handleInput() method. You don't need to modify this.
