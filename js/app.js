@@ -76,7 +76,7 @@ Player.prototype.update = function() {
 // Renders player, adds player score to top right corner of canvas\
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.font = "Bold 24px Helvetica";
+    ctx.font = "Bold 24px Arial";
     ctx.fillText("Score: " + this.score, 382, 35);
 };
 
