@@ -4,6 +4,11 @@
 
 "use strict";
 
+// Actor class
+// mentor suggest to split function (sides) in enemy and player classes for more modular and DRY
+// but i think, it different behaviour i guess, and it just make more complex when it injected into collide function.
+// then i didn't split it.
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed, sprite) {
     // Variables applied to each of our instances go here,
@@ -36,7 +41,7 @@ Enemy.prototype.render = function() {
 Enemy.prototype.reset = function() {
     if (this.x >= 500) {
         this.x = -101;
-        this.speed = randomInt(250, 450);
+        this.speed = Math.floor(Math.random() * (450 - 250 + 1)) + 250;
     }
 };
 
@@ -68,7 +73,7 @@ var Player = function(x, y) {
     this.score = 0;
 };
 
-// Upon collision player position is reset, score decreased by 1
+// collision player position is reset, score decreased by 1
 Player.prototype.update = function() {
     if (this.collide()) {
         this.reset();
@@ -86,8 +91,8 @@ Player.prototype.render = function() {
     ctx.fillText("Score: " + this.score, 382, 35);
 };
 
-// Enable player movement based key press
-// prevents out of map
+
+// prevents player out of map
 Player.prototype.handleInput = function(direction) {
     if (direction === 'left' && this.x !== borders.leftWall) {
         this.x -= 101;
@@ -116,7 +121,7 @@ var borders = {
     topWall: 50
 };
 
-// player jumping block dimension
+// player dimension to detect collision
 Player.prototype.sides = function(side) {
     if (side === 'leftSide') {
         return this.x + 31;
@@ -128,13 +133,13 @@ Player.prototype.sides = function(side) {
         return this.y + 80;
     }
     if (side === 'bottomSide') {
-        return this.y + 140;
+        return this.y + 150;
     }
 };
 
 // Detects collision, returns boolean value
 Player.prototype.collide = function() {
-    for (var i = 0; i < allEnemies.length; i++) {
+    for (var i = 0, len = allEnemies.length; i < len; i++) { 
         if (this.sides('leftSide') < allEnemies[i].sides('rightSide') &&
             this.sides('rightSide') > allEnemies[i].sides('leftSide') &&
             this.sides('topSide') < allEnemies[i].sides('bottomSide') &&
