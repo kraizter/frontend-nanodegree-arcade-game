@@ -141,7 +141,7 @@ Player.prototype.sides = function(side) {
         return this.y + 80;
     }
     if (side === 'bottomSide') {
-        return this.y + 150;
+        return this.y + 140;
     }
 };
 
