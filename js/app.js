@@ -3,6 +3,7 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 
 "use strict";
+var score_updated;
 
 // Actor class
 // mentor suggest to split function (sides) in enemy and player classes for more modular and DRY
@@ -87,8 +88,14 @@ Player.prototype.update = function() {
 // Renders player, adds player score to top right corner of canvas\
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    ctx.font = "Bold 24px Arial";
-    ctx.fillText("Score: " + this.score, 382, 35);
+    if (score_updated === true) {
+        ctx.clearRect(382, 0, 100, 50);
+        ctx.font = "Bold 24px Arial";
+        ctx.fillText("Score: " + this.score, 382, 35);
+    } else {
+        ctx.font = "Bold 24px Arial";
+        ctx.fillText("Score: " + this.score, 382, 35);
+    }
 };
 
 
@@ -106,6 +113,7 @@ Player.prototype.handleInput = function(direction) {
     } else if (direction === 'up' && this.y === 50) {
         this.reset();
         this.score++;
+        score_updated = true;
         console.log("score increased " + this.score);
     }
     if (direction === 'down' && this.y !== borders.bottomWall) {
